@@ -138,10 +138,22 @@ exports.updateUser = async (req, res)=> {
         })
         return res.status(200).json({
             message: " User updated",
-            users,
-            update
+            users: update
         })
     } catch (error) {
         res.status(500).send(error.message)
+    }
+}
+exports.deleteUser = async (req, res) => {
+    try {
+        let id = { _id: req.params.id};
+        let deleted = await User.findOneAndDelete(id);
+        if(!deleted) 
+        return res.status(400).send('user not deleted');
+        return res.status(200).json({
+            message: " user deleted succesfully"
+        })
+    } catch (error) {
+       
     }
 }
