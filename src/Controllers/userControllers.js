@@ -128,3 +128,20 @@ exports.getLoggedInUser = async (req, res)=> {
         res.status(500).send(error.message)
     }
 }
+exports.updateUser = async (req, res)=> {
+    try {
+        let id = { _id : req.params.id};
+        let users =  req.body;
+        const update = await User.findOneAndUpdate(id, users, { new: true });
+        if(!update) return res.status(400).json({
+            message: 'user not found'
+        })
+        return res.status(200).json({
+            message: " User updated",
+            users,
+            update
+        })
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}

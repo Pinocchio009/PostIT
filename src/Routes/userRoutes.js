@@ -10,5 +10,6 @@ router
       .post('/logout', controller.logOutUser)
       .get('/users', controller.getAllUsers)
       .get('/users/:id',isAuthenticated,controller.getLoggedInUser)
+      .put('/users/:id', controller.updateUser)
 
 module.exports = router;
