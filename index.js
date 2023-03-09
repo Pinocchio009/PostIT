@@ -9,9 +9,12 @@ connect()
 
 const app = express();
 app.use(json());
-app.use('/users', userRoutes)
+app.use('/', userRoutes)
 
 const PORT = 9800;
+app.get('/', (req, res)=> {
+    res.send('i am coming')
+});
 
 app.listen(PORT, ()=> 
     console.log(`App is listening on ${PORT} `)
