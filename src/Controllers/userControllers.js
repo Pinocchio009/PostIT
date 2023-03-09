@@ -24,7 +24,7 @@ exports.registerUser = async(req, res) => {
          role,
     
     })
-    await user.save() 
+   
         //NOW WE hash the password
         bcrypt.genSalt(10, (err, salt) => {
             if(err) {
@@ -66,7 +66,7 @@ exports.logInUser = async (req,res) => {
                 message: "invalid email or password"
             })
         }
-        //compare the password with the hashed password stored in the db
+        //compare the password with the hashed password stored in the dbS
         const isMatch = await bcrypt.compare(password, user.password)
 
         //if the password dont match return an error
@@ -100,4 +100,31 @@ exports.logOutUser = async (req, res) => {
     res.status(200).json({
         message: 'logout successful'
     })
+}
+exports.getAllUsers = async (req, res) => {
+    try {
+        let users = await User.find();
+        if(users.length === 0)
+        return res.status(404).json({
+          success: false,
+          message: 'No users found'
+        })
+        res.status(200).json({
+          message: 'user found',
+          users
+        })
+      } catch (error) {
+          res.status(500).send(error.message)
+      }
+}
+exports.getLoggedInUser = async (req, res)=> {
+    try {
+        const user = await User.findById(req.user.id).select("password");
+        res.status(200).json({
+            message: "User found succesfully",
+            user
+        })
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
 }
