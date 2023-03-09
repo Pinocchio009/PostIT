@@ -55,3 +55,49 @@ exports.registerUser = async(req, res) => {
         res.status(500).send(error.message)
     }
 }
+exports.logInUser = async (req,res) => {
+    const {email, password} = req.body;
+    try {
+        //find the user with the provided email
+        const user = await User.findOne({email});
+        //if the user is not found, return an error
+        if(!user) {
+            return res.status(400).json({
+                message: "invalid email or password"
+            })
+        }
+        //compare the password with the hashed password stored in the db
+        const isMatch = await bcrypt.compare(password, user.password)
+
+        //if the password dont match return an error
+        if(!isMatch){
+            return res.status(400).json({
+                message: 'invalid email or password'
+            })
+        }
+        //Generate a jwt token with the User's id
+        const token  = jwt.sign({ userid: user.id},
+            SECRET, {
+                expiresIn: '1h'
+            });
+            //set the token as a cookie and return a success message with the token
+            res.cookie('token', token, { httpOnly: true});
+            res.status(200).json({
+                message: 'login successful',
+                token: token
+            })
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+exports.logOutUser = async (req, res) => {
+    //clear the token cookie and return a success message
+    res.clearCookie('token');
+    res.status(200).json({
+        message: 'logout successful'
+    })
+}

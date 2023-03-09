@@ -22,8 +22,14 @@ const registrationSchemaValidation = Joi.object({
     
 })
 
+const loginSchemaValidation = Joi.object({
+    email: Joi.string().required(),
+    password: Joi.string().required()
+})
+
 
 module.exports = {
     registrationSchemaValidation,
-    validateSchema
+    validateSchema,
+    loginSchemaValidation
 }
