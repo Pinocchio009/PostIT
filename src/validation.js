@@ -31,10 +31,14 @@ const postItSchema = Joi.object({
     content: Joi.string().required(),
   });
 
-
+  const commentSchema = Joi.object({
+    content: Joi.string().required(),
+  });
+  
 module.exports = {
     registrationSchemaValidation,
     validateSchema,
     loginSchemaValidation,
-    postItSchema
+    postItSchema,
+    commentSchema
 }
