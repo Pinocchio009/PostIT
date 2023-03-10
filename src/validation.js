@@ -17,8 +17,7 @@ const validateSchema = (schema) => {
 const registrationSchemaValidation = Joi.object({
     username: Joi.string().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().required(),
-    role: Joi.string().required()
+    password: Joi.string().required()
     
 })
 
@@ -27,9 +26,15 @@ const loginSchemaValidation = Joi.object({
     password: Joi.string().required()
 })
 
+const postItSchema = Joi.object({
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+  });
+
 
 module.exports = {
     registrationSchemaValidation,
     validateSchema,
-    loginSchemaValidation
+    loginSchemaValidation,
+    postItSchema
 }
