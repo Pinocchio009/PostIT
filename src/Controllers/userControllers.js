@@ -6,8 +6,8 @@ const { SECRET } = process.env;
 exports.registerUser = async(req, res) => {
     try {
         //set this so you don't call req.body everytime
-        const {username ,email, password, role} = req.body;
-        if (!(username && email && password && role)) {
+        const {username ,email, password} = req.body;
+        if (!(username && email && password )) {
             res.status(400).send('all input is required');
         }
         //check if an account was created before
@@ -20,9 +20,7 @@ exports.registerUser = async(req, res) => {
     const user = await User.create({
         username,
         email,
-        password,
-         role,
-    
+        password
     })
    
         //NOW WE hash the password
