@@ -22,3 +22,30 @@ exports.createComment = async(req, res) => {
         })
     }
 }
+//get a single comment for a post
+exports.getComment = async(req,res) => {
+try {
+    const comment = await Comment.findOne({ _id: req.params.id, postId: req.params.postId, deleted: false });
+    if (!comment) {
+      return res.status(404).json({
+        message: 'Comment not found'
+      });
+    }
+    return res.json(comment);
+} catch (error) {
+    res.status(500).json({
+        message: error.message
+    })
+}
+}
+// Get all comments for a post
+exports.getAllComments = async(req,res) =>{
+    try {
+        const comments = await Comment.find({ postId: req.params.postId, deleted: false }).sort({ createdAt: 'desc' });
+    return res.json(comments);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
