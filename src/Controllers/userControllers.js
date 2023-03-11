@@ -152,6 +152,6 @@ exports.deleteUser = async (req, res) => {
             message: " user deleted succesfully"
         })
     } catch (error) {
-       
+        res.status(500).send(error.message)
     }
 }

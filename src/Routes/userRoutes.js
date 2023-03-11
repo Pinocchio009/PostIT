@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {validateSchema, registrationSchemaValidation,loginSchemaValidation} = require('../validation');
 const controller = require('../Controllers/userControllers');
-const {isAuthenticated} = require('../middlewares/auth')
+const {isAuthenticated} = require('../middleware/auth')
 
 
 router
