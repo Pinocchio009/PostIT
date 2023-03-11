@@ -57,6 +57,8 @@ Some potential improvements that could be made to the application include:
 
 Implementing pagination for retrieving large numbers of posts and comments
 Adding more advanced filtering options for posts and comments (e.g. by date range or user)
-Allowing users to follow other users and receive notifications when they
 
+  https://dbdesigner.page.link/xuxvGj47n9kAXqXMA
+  
+  link to the database design
 
