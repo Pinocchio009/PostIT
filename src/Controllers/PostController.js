@@ -1,5 +1,5 @@
 const postSchema = require('../Models/postModels');
-const comments = require('../Models/commentModel')
+const Comment = require('../Models/commentModel')
 const {commentSchema, postItSchema} =require('../validation')
 
 //create a post
@@ -50,3 +50,45 @@ exports.getPost = async (req, res) => {
     })
   }
  }
+//user can update already posted stuff
+exports.updatePost = async(req, res) => {
+try {
+    // Validate user input
+    const { error } = postSchema.validate(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+  
+    // Find post-it and check if author
+    const postIt = await postSchema.findOne({ _id: req.params.id, author: req.user._id });
+    if (!postIt) return res.status(404).send('Post-it not found.');
+  
+    // Update post-it
+    postIt.title = req.body.title;
+    postIt.content = req.body.content;
+    await postIt.save();
+  
+    res.send(postIt);
+} catch (error) {
+  res.status(500).json({
+    message: 'server error'
+  })
+}
+}
+
+exports.deletePost = async(req,res) => {
+  try {
+    // Find post-it and check if author
+  const postIt = await postSchema.findOne({ _id: req.params.id, author: req.user._id });
+  if (!postIt) return res.status(404).send('Post-it not found.');
+
+  // Soft delete post-it and its replies
+  postIt.deleted = true;
+  await postIt.save();
+  await Comment.updateMany({ _id: { $in: postIt.comments } }, { deleted: true });
+
+  res.send(postIt);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
