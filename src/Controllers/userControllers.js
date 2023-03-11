@@ -21,7 +21,8 @@ exports.registerUser = async(req, res) => {
     const user = await User.create({
         username,
         email,
-        password
+        password,
+    
     })
    
         //NOW WE hash the password
