@@ -12,5 +12,7 @@ router
       .get('/users/:id',isAuthenticated,controller.getLoggedInUser)
       .put('/users/:id', controller.updateUser)
       .delete('/users/:id', controller.deleteUser)
+      .get('/users/:username', controller.getProfile)
+      .get('/users/:username/posts',controller.getProfilePost)
 
 module.exports = router;

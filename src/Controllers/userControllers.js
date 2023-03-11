@@ -1,4 +1,5 @@
 const User = require('../Models/userModel');
+const Post = require('../Models/postModels');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SECRET } = process.env;
@@ -155,3 +156,27 @@ exports.deleteUser = async (req, res) => {
         res.status(500).send(error.message)
     }
 }
+
+// Get user profile
+
+exports.getProfile = async(req,res)=> {
+  try {
+    const user = await User.findOne({ username: req.params.username }).select('-password');
+    if (!user) return res.status(404).send('User not found.');
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error.message)
+  }  
+}
+exports.getProfilePost = async(req,res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username });
+  if (!user) return res.status(404).send('User not found.');
+
+  const posts = await Post.find({ author: user._id, deleted: false }).sort({ createdAt: -1 });
+   res.send(posts);
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
+
