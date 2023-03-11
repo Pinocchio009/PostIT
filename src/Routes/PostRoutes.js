@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {isAuthenticated} = require('../middlewares/auth');
+const {isAuthenticated} = require('../middleware/auth');
 const {validateSchema, postItSchema} = require('../validation')
 const controller = require('../Controllers/PostController')
 
