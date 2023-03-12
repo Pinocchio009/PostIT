@@ -10,9 +10,9 @@ router
       .post('/logout', controller.logOutUser)
       .get('/users', controller.getAllUsers)
       .get('/users/:id',isAuthenticated,controller.getLoggedInUser)
-      .put('/users/:id', controller.updateUser)
-      .delete('/users/:id', controller.deleteUser)
-      .get('/users/:username', controller.getProfile)
-      .get('/users/:username/posts',controller.getProfilePost)
+      .put('/users/:id',isAuthenticated,controller.updateUser)
+      .delete('/users/:id',isAuthenticated, controller.deleteUser)
+      .get('/users/:username',isAuthenticated, controller.getProfile)
+      .get('/users/:username/posts',isAuthenticated, controller.getProfilePost)
 
 module.exports = router;
