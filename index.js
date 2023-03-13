@@ -5,8 +5,6 @@ const {json} = require('express');
 const userRoutes = require('./src/Routes/userRoutes');
 const postRoutes = require('./src/Routes/PostRoutes');
 const commentRoutes = require('./src/Routes/commentRoutes')
-const {getData} = require('./doc')
-
 
 connect()
 
@@ -16,12 +14,23 @@ app.use(json());
 app.use('/', userRoutes);
 app.use('/', postRoutes);
 app.use('/', commentRoutes);
-app.use('/', getData)
+
 
 const PORT = 9800;
-app.get('/', (req, res)=> {
-    res.send('i am coming')
-});
+app.get('/doc', async (req, res) => {
+    res.redirect('/to');
+  });
+  
+  app.get('/to', (req, res) => {
+    res.send('https://documenter.getpostman.com/view/18013502/2s93JtQixL');
+  });
+  async function getData() {
+    const res = await axios.get('https://post-it-quni.onrender.com/doc');
+    // Do something with res.data
+    console.log(res.data);
+  }
+  
+  getData();  
 
 app.listen(PORT, ()=> 
     console.log(`App is listening on ${PORT} `)
