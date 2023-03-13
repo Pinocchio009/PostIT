@@ -5,7 +5,6 @@ const {json} = require('express');
 const userRoutes = require('./src/Routes/userRoutes');
 const postRoutes = require('./src/Routes/PostRoutes');
 const commentRoutes = require('./src/Routes/commentRoutes')
-const {getData} = require('./doc')
 
 
 connect()
@@ -16,7 +15,6 @@ app.use(json());
 app.use('/', userRoutes);
 app.use('/', postRoutes);
 app.use('/', commentRoutes);
-app.use('/', getData)
 
 const PORT = 9800;
 app.get('/', (req, res)=> {
